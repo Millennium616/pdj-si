@@ -14,7 +14,6 @@ public class PowerUpManager : MonoBehaviour
 
     public void TrySpawnPowerUp(Vector3 position)
     {
-        Debug.Log("Tentando spawnar powerup...");
         if (Random.value < dropChance && powerUpPrefabs.Length > 0)
         {
             int idx = Random.Range(0, powerUpPrefabs.Length);

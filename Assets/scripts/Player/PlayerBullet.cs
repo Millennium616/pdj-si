@@ -6,9 +6,18 @@ public class PlayerBullet : MonoBehaviour
     public float lifeTime = 3f;
     public int damage = 1;
 
+    private Renderer rend;
+
     void Start()
     {
+        rend = GetComponent<Renderer>();
         Destroy(gameObject, lifeTime);
+    }
+
+    public void SetColor(Color c)
+    {
+        if (rend != null)
+            rend.material.color = c;
     }
 
     void Update()

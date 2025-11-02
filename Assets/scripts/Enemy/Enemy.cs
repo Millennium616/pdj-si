@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum EnemyType { Basic, ZigZag, Tank }
+    public EnemyType enemyType;
+
     public int health = 1;
     public float speed = 2f;
     public int damage = 1;
+    public int points = 1;
+
+    [Header("Tiro")]
     public float shootInterval = 1.5f;
     public GameObject bulletPrefab;
     public Transform shootPoint;
@@ -18,8 +24,31 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.down * speed * Time.deltaTime;
+        Move();
+        ShootTimer();
+    }
 
+    void Move()
+    {
+        switch (enemyType)
+        {
+            case EnemyType.Basic:
+                transform.position += Vector3.down * speed * Time.deltaTime;
+                break;
+
+            case EnemyType.ZigZag:
+                float x = Mathf.Sin(Time.time * 3f) * 2f;
+                transform.position += new Vector3(x, -speed * Time.deltaTime, 0);
+                break;
+
+            case EnemyType.Tank:
+                transform.position += Vector3.down * (speed * 0.5f) * Time.deltaTime;
+                break;
+        }
+    }
+
+    void ShootTimer()
+    {
         shootTimer -= Time.deltaTime;
         if (shootTimer <= 0f)
         {
@@ -32,7 +61,13 @@ public class Enemy : MonoBehaviour
     {
         if (bulletPrefab != null && shootPoint != null)
         {
-            Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.down * 8f;
+            }
         }
     }
 
@@ -48,6 +83,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         PowerUpManager.Instance?.TrySpawnPowerUp(transform.position);
+        GameManager.Instance.AddScore(points);
         Destroy(gameObject);
     }
 

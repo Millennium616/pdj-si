@@ -5,38 +5,32 @@ public class PowerUp : MonoBehaviour
     public enum Type { ExtraLife, SpeedUp, StrongShot }
     public Type type;
 
-    void Start()
-    {
-        Debug.Log("PowerUp Start: " + gameObject.name + " " + transform.position);
-    }
+    public float duration = 5f;
+    public int amount = 1;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("PowerUp colidiu com: " + other.gameObject.name);
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                ApplyEffect(player);
+                switch (type)
+                {
+                    case Type.ExtraLife:
+                        player.Heal(amount);
+                        break;
+
+                    case Type.SpeedUp:
+                        player.ActivateSpeedBoost(amount, duration);
+                        break;
+
+                    case Type.StrongShot:
+                        player.ActivateDamageBoost(amount, duration);
+                        break;
+                }
             }
             Destroy(gameObject);
-        }
-    }
-
-    void ApplyEffect(Player player)
-    {
-        switch (type)
-        {
-            case Type.ExtraLife:
-                GameManager.Instance.ChangeLives(+1);
-                break;
-            case Type.SpeedUp:
-                player.moveSpeed += 3f;
-                break;
-            case Type.StrongShot:
-                player.bulletPrefab.GetComponent<PlayerBullet>().damage += 1;
-                break;
         }
     }
 }
