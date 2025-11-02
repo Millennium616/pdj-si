@@ -5,9 +5,11 @@ public class Enemy : MonoBehaviour
     public enum EnemyType { Basic, ZigZag, Tank }
     public EnemyType enemyType;
 
+    [Header("Status")]
     public int health = 1;
     public float speed = 2f;
     public int damage = 1;
+
     public int points = 1;
 
     [Header("Tiro")]
@@ -17,15 +19,20 @@ public class Enemy : MonoBehaviour
 
     private float shootTimer;
 
+    private float startX;
+    public float zigzagOffset = 2f;
+    public float zigzagSpeed = 3f;
+
     void Start()
     {
         shootTimer = shootInterval;
+        startX = transform.position.x;
     }
 
     void Update()
     {
         Move();
-        ShootTimer();
+        HandleShooting();
     }
 
     void Move()
@@ -37,8 +44,13 @@ public class Enemy : MonoBehaviour
                 break;
 
             case EnemyType.ZigZag:
-                float x = Mathf.Sin(Time.time * 3f) * 2f;
-                transform.position += new Vector3(x, -speed * Time.deltaTime, 0);
+                float oscillate = Mathf.Sin(Time.time * zigzagSpeed) * zigzagOffset;
+
+                transform.position = new Vector3(
+                    startX + oscillate,
+                    transform.position.y - speed * Time.deltaTime,
+                    0f
+                );
                 break;
 
             case EnemyType.Tank:
@@ -47,7 +59,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void ShootTimer()
+    void HandleShooting()
     {
         shootTimer -= Time.deltaTime;
         if (shootTimer <= 0f)
@@ -61,13 +73,11 @@ public class Enemy : MonoBehaviour
     {
         if (bulletPrefab != null && shootPoint != null)
         {
-            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
-
+            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
             if (rb != null)
-            {
                 rb.linearVelocity = Vector3.down * 8f;
-            }
         }
     }
 
@@ -75,9 +85,7 @@ public class Enemy : MonoBehaviour
     {
         health -= amount;
         if (health <= 0)
-        {
             Die();
-        }
     }
 
     void Die()
@@ -91,11 +99,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player player = other.GetComponent<Player>();
-            if (player != null)
-            {
-                player.TakeDamage(damage);
-            }
+            Player p = other.GetComponent<Player>();
+            if (p != null)
+                p.TakeDamage(damage);
+
             Destroy(gameObject);
         }
     }

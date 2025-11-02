@@ -131,6 +131,8 @@ MonoBehaviour:
   shootInterval: 2
   bulletPrefab: {fileID: 8046595245182453236, guid: b739caee470ce7a48bdf1b7c51dd0ef3, type: 3}
   shootPoint: {fileID: 6132912104539817296}
+  zigzagOffset: 2
+  zigzagSpeed: 3
 --- !u!54 &3853648329977150161
 Rigidbody:
   m_ObjectHideFlags: 0

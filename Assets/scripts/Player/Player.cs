@@ -14,10 +14,11 @@ public class Player : MonoBehaviour
     private float cooldownTimer = 0f;
 
     [Header("Vidas")]
-    public int maxLives = 3;
+    public int Lives = 3;
     private int currentLives;
 
     private Rigidbody rb;
+
 
     private float baseSpeed;
     private float speedTimer = 0f;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY;
 
-        currentLives = maxLives;
+        currentLives = Lives;
         GameManager.Instance.lives = currentLives;
         GameManager.Instance.UpdateUI();
 
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
-        currentLives = maxLives;
+        currentLives = Lives;
         GameManager.Instance.lives = currentLives;
         GameManager.Instance.UpdateUI();
     }
