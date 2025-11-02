@@ -1,19 +1,17 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Pontuação")]
+    [Header("Status do Jogo")]
     public int score = 0;
-    public int targetScore = 20;
-
-    [Header("Vidas")]
     public int lives = 3;
+    public bool isGameOver = false;
 
-    [Header("Referências UI")]
+    [Header("UI")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
 
@@ -22,13 +20,20 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
             Destroy(gameObject);
             return;
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded; 
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
     }
 
     private void Start()
@@ -36,47 +41,66 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Game")
+        {
+            isGameOver = false;
+        }
+        
+        UpdateUI();
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateUI();
+        Debug.Log("Score resetado para 0.");
+    }
+
+    public void ResetLives()
+    {
+        lives = 3;
+        UpdateUI();
+    }
+
     public void AddScore(int amount)
     {
         score += amount;
         UpdateUI();
-        if (score >= targetScore)
+    }
+
+    public void TakeDamage(int amount)
+    {
+        if (isGameOver) return;
+
+        lives -= amount;
+        UpdateUI();
+
+        if (lives <= 0)
         {
-            if (Application.CanStreamedLevelBeLoaded("Victory"))
-                SceneManager.LoadScene("Victory");
-            else
-                Debug.LogWarning("Cena 'Victory' não encontrada em Build Settings!");
+            GameOver();
         }
     }
 
-    public void ChangeLives(int amount)
+    void GameOver()
     {
-        lives += amount;
-        UpdateUI();
-        if (lives <= 0)
-        {
-            if (Application.CanStreamedLevelBeLoaded("Defeat"))
-                SceneManager.LoadScene("Defeat");
-            else
-                Debug.LogWarning("Cena 'Defeat' não encontrada em Build Settings!");
-        }
+        isGameOver = true;
+        Debug.Log("Game Over! Pontuação final: " + score);
+        SceneManager.LoadScene("Defeat");
     }
 
     public void UpdateUI()
     {
+        
         if (scoreText != null)
-            scoreText.text = "Score: " + score;
+        {
+            scoreText.text = "SCORE: " + score.ToString();
+        }
+        
         if (livesText != null)
-            livesText.text = "Lives: " + lives;
-    }
-
-    public void ResetGame()
-    {
-        score = 0;
-        lives = 3;
-        UpdateUI();
-
-        var player = FindFirstObjectByType<Player>();
-        if (player != null) player.ResetPlayer();
+        {
+            livesText.text = "LIVES: " + lives.ToString();
+        }
     }
 }
