@@ -2,34 +2,44 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int maxHealth = 1;
-    public int currentHealth;
-    public int points = 1;
+    public int health = 1;
+    public float speed = 2f;
+    public int damage = 1;
+    public float shootInterval = 1.5f;
     public GameObject bulletPrefab;
     public Transform shootPoint;
-    public float shootInterval = 2f;
+
     private float shootTimer;
 
     void Start()
     {
-        currentHealth = maxHealth;
         shootTimer = shootInterval;
     }
 
     void Update()
     {
+        transform.position += Vector3.down * speed * Time.deltaTime;
+
         shootTimer -= Time.deltaTime;
-        if (shootTimer <= 0)
+        if (shootTimer <= 0f)
+        {
+            Shoot();
+            shootTimer = shootInterval;
+        }
+    }
+
+    void Shoot()
+    {
+        if (bulletPrefab != null && shootPoint != null)
         {
             Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
-            shootTimer = shootInterval;
         }
     }
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        health -= amount;
+        if (health <= 0)
         {
             Die();
         }
@@ -37,9 +47,21 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        GameManager.Instance.AddScore(points);
-        PowerUpManager.Instance.TrySpawnPowerUp(transform.position);
+        PowerUpManager.Instance?.TrySpawnPowerUp(transform.position);
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
+            Destroy(gameObject);
+        }
     }
 }
 
