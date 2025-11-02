@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float speed = 10f;
-    public float lifeTime = 3f;
+    public float speed = 8f;
+    public float lifeTime = 4f;
+    public int damage = 1;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class EnemyBullet : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                player.TakeDamage(1);
+                player.TakeDamage(damage);
             }
             Destroy(gameObject);
         }

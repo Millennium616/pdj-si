@@ -136,7 +136,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -154,12 +154,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b362fbe4e2a5f47a7abc94b68cf6fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
-  currentHealth: 1
-  points: 1
+  health: 1
+  speed: 2
+  damage: 1
+  shootInterval: 2
   bulletPrefab: {fileID: 8046595245182453236, guid: b739caee470ce7a48bdf1b7c51dd0ef3, type: 3}
   shootPoint: {fileID: 8424087997802922969}
-  shootInterval: 2
 --- !u!54 &1273197334758372116
 Rigidbody:
   m_ObjectHideFlags: 0
