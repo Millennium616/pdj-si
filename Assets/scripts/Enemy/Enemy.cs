@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         GameManager.Instance.AddScore(points);
+        PowerUpManager.Instance.TrySpawnPowerUp(transform.position);
         Destroy(gameObject);
     }
 }

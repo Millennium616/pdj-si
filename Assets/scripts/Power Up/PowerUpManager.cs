@@ -1,32 +1,23 @@
 using UnityEngine;
 
-
 public class PowerUpManager : MonoBehaviour
-
 {
-public static PowerUpManager Instance;
+    public static PowerUpManager Instance;
+    public GameObject[] powerUpPrefabs;
+    public float dropChance = 0.3f;
 
-
-    public GameObject[] powerUps;
-    public float dropChance = 0.25f;
-
-
-    private void Awake()
+    void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
-
-
-    public void TrySpawnPowerUp(Vector3 pos)
+    public void TrySpawnPowerUp(Vector3 position)
     {
-        float r = Random.value;
-        if (r <= dropChance)
+        if (Random.value < dropChance && powerUpPrefabs.Length > 0)
         {
-            int rand = Random.Range(0, powerUps.Length);
-            Instantiate(powerUps[rand], pos, Quaternion.identity);
+            int idx = Random.Range(0, powerUpPrefabs.Length);
+            Instantiate(powerUpPrefabs[idx], position, Quaternion.identity);
         }
     }
-
 }

@@ -1,24 +1,22 @@
 using UnityEngine;
 
-
 public class PowerUp : MonoBehaviour
 {
     public enum Type { ExtraLife, SpeedUp, StrongShot }
     public Type type;
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            ApplyEffect(other.GetComponent<Player>());
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                ApplyEffect(player);
+            }
             Destroy(gameObject);
         }
     }
-
-
-
 
     void ApplyEffect(Player player)
     {
@@ -28,17 +26,13 @@ public class PowerUp : MonoBehaviour
                 GameManager.Instance.ChangeLives(+1);
                 break;
 
-
             case Type.SpeedUp:
                 player.moveSpeed += 3f;
                 break;
-
 
             case Type.StrongShot:
                 player.bulletPrefab.GetComponent<PlayerBullet>().damage += 1;
                 break;
         }
     }
-
 }
-
