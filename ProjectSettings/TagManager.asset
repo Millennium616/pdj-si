@@ -7,6 +7,7 @@ TagManager:
   - Star
   - Meteor
   - Enemy
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX

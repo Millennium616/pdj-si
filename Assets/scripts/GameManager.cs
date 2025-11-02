@@ -5,19 +5,33 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header("Pontuação")]
     public int score = 0;
     public int targetScore = 20;
+
+    [Header("Vidas")]
     public int lives = 3;
-    public TextMeshPro scoreText;
-    public TextMeshPro livesText;
+
+    [Header("Referências UI")]
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI livesText;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
-    void Start()
+    private void Start()
     {
         UpdateUI();
     }
@@ -28,7 +42,10 @@ public class GameManager : MonoBehaviour
         UpdateUI();
         if (score >= targetScore)
         {
-            SceneManager.LoadScene("Victory");
+            if (Application.CanStreamedLevelBeLoaded("Victory"))
+                SceneManager.LoadScene("Victory");
+            else
+                Debug.LogWarning("Cena 'Victory' não encontrada em Build Settings!");
         }
     }
 
@@ -38,14 +55,19 @@ public class GameManager : MonoBehaviour
         UpdateUI();
         if (lives <= 0)
         {
-            SceneManager.LoadScene("Defeat");
+            if (Application.CanStreamedLevelBeLoaded("Defeat"))
+                SceneManager.LoadScene("Defeat");
+            else
+                Debug.LogWarning("Cena 'Defeat' não encontrada em Build Settings!");
         }
     }
 
-    public void UpdateUI() // <-- TORNE PÚBLICO
+    public void UpdateUI()
     {
-        scoreText.text = "Score: " + score;
-        livesText.text = "Lives: " + lives;
+        if (scoreText != null)
+            scoreText.text = "Score: " + score;
+        if (livesText != null)
+            livesText.text = "Lives: " + lives;
     }
 
     public void ResetGame()
@@ -53,7 +75,8 @@ public class GameManager : MonoBehaviour
         score = 0;
         lives = 3;
         UpdateUI();
-        var player = FindAnyObjectByType<Player>();
+
+        var player = FindFirstObjectByType<Player>();
         if (player != null) player.ResetPlayer();
     }
 }
