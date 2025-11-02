@@ -7,7 +7,7 @@ public class PowerUp : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("PowerUp apareceu! Pos: " + transform.position);
+        Debug.Log("PowerUp Start: " + gameObject.name + " " + transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,11 +31,9 @@ public class PowerUp : MonoBehaviour
             case Type.ExtraLife:
                 GameManager.Instance.ChangeLives(+1);
                 break;
-
             case Type.SpeedUp:
                 player.moveSpeed += 3f;
                 break;
-
             case Type.StrongShot:
                 player.bulletPrefab.GetComponent<PlayerBullet>().damage += 1;
                 break;
