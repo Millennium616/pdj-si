@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY;
         currentLives = maxLives;
         GameManager.Instance.lives = currentLives;
         GameManager.Instance.UpdateUI();
@@ -36,14 +36,8 @@ public class Player : MonoBehaviour
     void Move()
     {
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical"); // caso queira mover verticalmente também
-
-        Vector3 movement = new Vector3(h, 0, 0) * moveSpeed;
-        rb.linearVelocity = movement; // Movimento no eixo X
-
-        // Se quiser mover no eixo Z (frente e trás) em vez do Y (altura), use:
-        // Vector3 movement = new Vector3(h, 0, v) * moveSpeed;
-        // rb.velocity = movement;
+        Vector3 movement = new Vector3(h * moveSpeed, 0, 0);
+        rb.linearVelocity = movement;
     }
 
     void Shoot()
@@ -58,19 +52,22 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+
+        Debug.Log("Player TakeDamage chamado! Vidas antes: " + currentLives);
         currentLives -= amount;
         GameManager.Instance.lives = currentLives;
         GameManager.Instance.UpdateUI();
         if (currentLives <= 0)
         {
-            SceneManager.LoadScene("Defeat");
+            if (Application.CanStreamedLevelBeLoaded("Defeat"))
+                SceneManager.LoadScene("Defeat");
+            else
+                Debug.LogWarning("A cena 'Defeat' não existe ou não está adicionada em Build Settings!");
         }
     }
-
+    
     public void ResetPlayer()
     {
-        moveSpeed = 10f;
-        shootCooldown = 0.3f;
         currentLives = maxLives;
         GameManager.Instance.lives = currentLives;
         GameManager.Instance.UpdateUI();

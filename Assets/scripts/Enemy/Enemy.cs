@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         GameManager.Instance.AddScore(points);
-        // PowerUpManager.Instance.TrySpawnPowerUp(transform.position); // Se quiser power-ups
         Destroy(gameObject);
     }
 }
