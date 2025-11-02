@@ -18,7 +18,6 @@ public class PowerUpManager : MonoBehaviour
         {
             int idx = Random.Range(0, powerUpPrefabs.Length);
             GameObject powerUp = Instantiate(powerUpPrefabs[idx], position, Quaternion.identity);
-            Debug.Log("Instanciando powerup: " + powerUp.name + " em " + position);
         }
     }
 

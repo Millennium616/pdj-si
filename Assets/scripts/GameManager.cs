@@ -15,6 +15,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
 
+    [Header("Victory Condition")]
+    public int victoryScore = 20; 
+
+    public void WinGame()
+    {
+        SceneManager.LoadScene("Victory");
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -86,7 +94,6 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         isGameOver = true;
-        Debug.Log("Game Over! Pontuação final: " + score);
         SceneManager.LoadScene("Defeat");
     }
 
