@@ -76,6 +76,10 @@ public class GameManager : MonoBehaviour
     {
         score += amount;
         UpdateUI();
+        if (score >= victoryScore)
+        {
+            WinGame();
+        }
     }
 
     public void TakeDamage(int amount)
