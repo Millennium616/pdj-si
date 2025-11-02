@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Enemy : MonoBehaviour
 {
     public int maxHealth = 1;
@@ -11,20 +10,15 @@ public class Enemy : MonoBehaviour
     public float shootInterval = 2f;
     private float shootTimer;
 
-
     void Start()
     {
         currentHealth = maxHealth;
         shootTimer = shootInterval;
     }
 
-
-
     void Update()
     {
         shootTimer -= Time.deltaTime;
-
-
         if (shootTimer <= 0)
         {
             Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
@@ -32,40 +26,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
-public void TakeDamage(int amount)
-{
-currentHealth -= amount;
-
-
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
         if (currentHealth <= 0)
         {
-
-
-
+            Die();
         }
-}
-
-
-    void OnTriggerEnter(Collider other)
-    {
-
-        if (other.CompareTag("Player"))
-
-        {
-            other.GetComponent<Player>().TakeDamage(1);
-        }
-
     }
 
     void Die()
     {
         GameManager.Instance.AddScore(points);
-        PowerUpManager.Instance.TrySpawnPowerUp(transform.position);
+        // PowerUpManager.Instance.TrySpawnPowerUp(transform.position); // Se quiser power-ups
         Destroy(gameObject);
     }
-
-
 }
 
