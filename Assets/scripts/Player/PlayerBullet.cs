@@ -1,12 +1,10 @@
 using UnityEngine;
 
-
 public class PlayerBullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 3f;
     public int damage = 1;
-
 
     void Start()
     {
@@ -18,15 +16,17 @@ public class PlayerBullet : MonoBehaviour
         transform.position += Vector3.up * speed * Time.deltaTime;
     }
 
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
     }
-
 }
+

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  currentHealth: 0
+  currentHealth: 1
   points: 1
   bulletPrefab: {fileID: 8046595245182453236, guid: b739caee470ce7a48bdf1b7c51dd0ef3, type: 3}
   shootPoint: {fileID: 8424087997802922969}
