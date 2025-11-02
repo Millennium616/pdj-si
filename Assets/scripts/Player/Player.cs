@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public Transform shootPoint;
     public float shootCooldown = 0.3f;
     private float cooldownTimer = 0f;
+    public Color baseBulletColor = Color.white;
+    public Color strongBulletColor = Color.red;
+
 
     [Header("Vidas")]
     public int Lives = 3;
@@ -27,8 +30,6 @@ public class Player : MonoBehaviour
     private int currentDamage;
     private float damageTimer = 0f;
 
-    private Color baseBulletColor = Color.white;
-    private Color strongBulletColor = Color.red;
 
     void Start()
     {

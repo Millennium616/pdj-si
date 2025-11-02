@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  duration: 5
+  amount: 5
 --- !u!54 &8351786383012699825
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -393,6 +393,8 @@ MonoBehaviour:
   speed: 20
   lifeTime: 3
   damage: 1
+  sphereRenderer: {fileID: 3958711145268516193}
+  bulletLight: {fileID: 7452846289928664828}
 --- !u!135 &6673000769565140602
 SphereCollider:
   m_ObjectHideFlags: 0
