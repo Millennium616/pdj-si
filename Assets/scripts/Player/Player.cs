@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public Transform shootPoint;
     public float shootCooldown = 0.3f;
     private float cooldownTimer = 0f;
-    public Color baseBulletColor = Color.white;
+    public Color baseBulletColor = Color.cyan;
     public Color strongBulletColor = Color.red;
 
 
@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     private int currentLives;
 
     private Rigidbody rb;
-
 
     private float baseSpeed;
     private float speedTimer = 0f;

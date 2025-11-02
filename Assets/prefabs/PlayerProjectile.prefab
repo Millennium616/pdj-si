@@ -43,7 +43,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.23137252, g: 0.752474, b: 0.8039216, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 500
   m_Range: 0.47
   m_SpotAngle: 30
@@ -393,8 +393,6 @@ MonoBehaviour:
   speed: 20
   lifeTime: 3
   damage: 1
-  sphereRenderer: {fileID: 3958711145268516193}
-  bulletLight: {fileID: 7452846289928664828}
 --- !u!135 &6673000769565140602
 SphereCollider:
   m_ObjectHideFlags: 0
