@@ -155,9 +155,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  shootCooldown: 0.3
+  xMin: -7
+  xMax: 7
   bulletPrefab: {fileID: 7581703157171272044, guid: 052124c095d97684a93e6bc857a51242, type: 3}
   shootPoint: {fileID: 1595138786531888532}
+  shootCooldown: 0.3
+  baseBulletColor: {r: 0, g: 0.9813111, b: 1, a: 1}
+  strongBulletColor: {r: 1, g: 0, b: 0, a: 1}
+  Lives: 3
 --- !u!54 &4292429879567961519
 Rigidbody:
   m_ObjectHideFlags: 0

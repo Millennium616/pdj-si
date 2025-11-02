@@ -9,10 +9,9 @@ public class PlayerBullet : MonoBehaviour
     private MeshRenderer sphereRenderer;
     private Light bulletLight;
     
-    private Color startColor;
-    private Color strongPulseColor = Color.yellow;
+    private Color baseLightColor;
     private bool isStrongShot = false;
-
+    
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
     private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor"); 
     private static readonly int MainColorID = Shader.PropertyToID("_Color"); 
@@ -23,17 +22,17 @@ public class PlayerBullet : MonoBehaviour
         sphereRenderer = GetComponentInChildren<MeshRenderer>();
         bulletLight = GetComponentInChildren<Light>();
         
-        if (damage > 1)
-        {
-            isStrongShot = true;
-        }
-
         Destroy(gameObject, lifeTime);
     }
 
     public void SetColor(Color c)
     {
-        startColor = c;
+        baseLightColor = c;
+        
+        if (damage > 1)
+        {
+            isStrongShot = true;
+        }
 
         if (sphereRenderer != null)
         {
@@ -65,8 +64,16 @@ public class PlayerBullet : MonoBehaviour
         
         if (bulletLight != null)
         {
-            bulletLight.color = c;
-            bulletLight.intensity = 1f;
+            if (!isStrongShot)
+            {
+                bulletLight.color = c;
+                bulletLight.intensity = 500f; // Define a intensidade base
+            }
+            else
+            {
+                bulletLight.color = c; 
+                bulletLight.intensity = 500f; 
+            }
         }
     }
 
@@ -76,10 +83,15 @@ public class PlayerBullet : MonoBehaviour
 
         if (isStrongShot && bulletLight != null)
         {
-            float t = (Mathf.Sin(Time.time * 20f) + 1f) * 0.5f;
-            bulletLight.color = Color.Lerp(startColor, strongPulseColor, t);
+            float hue = Mathf.Repeat(Time.time * 0.25f, 1f); 
             
-            bulletLight.intensity = Mathf.Lerp(1.5f, 3.5f, t);
+            Color rainbowColor = Color.HSVToRGB(hue, 1f, 1f); 
+
+            bulletLight.color = rainbowColor;
+
+            // CORREÇÃO: Ajusta o range de pulsação para a base 500
+            float pulse = (Mathf.Sin(Time.time * 10f) + 1f) * 0.5f;
+            bulletLight.intensity = Mathf.Lerp(400f, 600f, pulse);
         }
     }
 
