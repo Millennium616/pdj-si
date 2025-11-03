@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 2.37, y: 0.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6981406200972018661}
@@ -162,6 +162,8 @@ MonoBehaviour:
   shootInterval: 2
   bulletPrefab: {fileID: 8046595245182453236, guid: b739caee470ce7a48bdf1b7c51dd0ef3, type: 3}
   shootPoint: {fileID: 6981406200972018661}
+  zigzagOffset: 2
+  zigzagSpeed: 3
 --- !u!54 &5599084813961352892
 Rigidbody:
   m_ObjectHideFlags: 0

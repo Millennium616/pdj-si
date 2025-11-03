@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c8f9ce5474036341884bebcc236ed96, type: 2}
+  - {fileID: 2100000, guid: a2e498d58d74280438e0e6eab0326474, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -154,12 +154,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b362fbe4e2a5f47a7abc94b68cf6fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   health: 1
   speed: 2
   damage: 1
+  points: 1
   shootInterval: 2
   bulletPrefab: {fileID: 8046595245182453236, guid: b739caee470ce7a48bdf1b7c51dd0ef3, type: 3}
   shootPoint: {fileID: 8424087997802922969}
+  zigzagOffset: 2
+  zigzagSpeed: 3
 --- !u!54 &1273197334758372116
 Rigidbody:
   m_ObjectHideFlags: 0

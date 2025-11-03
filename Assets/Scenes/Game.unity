@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpPrefabs:
-  - {fileID: 2535585324517348388, guid: e269b44a71437bd45bdde8666c098f2f, type: 3}
   - {fileID: 952145731527765701, guid: 20e3c3f7db9434c458d7633b6a13eba3, type: 3}
+  - {fileID: 2535585324517348388, guid: e269b44a71437bd45bdde8666c098f2f, type: 3}
   - {fileID: 7359100431486617922, guid: 2a4ade3214c34b446b05da5dd8ef7119, type: 3}
-  dropChance: 0.3
+  dropChance: 0.5
 --- !u!4 &245282357
 Transform:
   m_ObjectHideFlags: 0
@@ -431,11 +431,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!4 &505545021 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2209808457657537968, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
-  m_PrefabInstance: {fileID: 8187485913806582555}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &790804770
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,12 +456,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790804770}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.34, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: -0.16, y: 2.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 505545021}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &790804772
 MonoBehaviour:
@@ -480,12 +475,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4ce3664d928da43b1d0f4f562ed69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs:
-  - {fileID: 3691779449452471033, guid: 158f1bb7a35f9df42b679d8ac7707b9f, type: 3}
+  basicEnemy: {fileID: 3691779449452471033, guid: 158f1bb7a35f9df42b679d8ac7707b9f, type: 3}
+  fastEnemy: {fileID: 5803364819604858995, guid: aab64e13f35ba3b4ba1e22a447d2dc98, type: 3}
+  tankEnemy: {fileID: 59143253590875949, guid: 271065a7279b71241b6750053b27d7f8, type: 3}
   spawnInterval: 2
-  xMin: -7
-  xMax: 7
-  ySpawn: 5
+  spawnXMin: -7
+  spawnXMax: 7
+  spawnY: 6
+  difficultyIncreaseInterval: 10
+  intervalDecreaseAmount: 0.2
+  minSpawnInterval: 0.5
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,10 +797,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  targetScore: 20
   lives: 3
+  isGameOver: 0
   scoreText: {fileID: 1489987080}
   livesText: {fileID: 1741449854}
+  victoryScore: 20
 --- !u!1 &1680006547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,15 +1135,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1489987080}
     - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
       propertyPath: shootCooldown
-      value: 0.7
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: baseBulletColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: baseBulletColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: baseBulletColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: strongBulletColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: strongBulletColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109671715306732324, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
+      propertyPath: strongBulletColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2209808457657537968, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 790804771}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 282939ba6a78c3a48b7968e1d2b613bd, type: 3}
 --- !u!1660057539 &9223372036854775807
@@ -1154,6 +1179,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2034595562}
+  - {fileID: 790804771}
   - {fileID: 8187485913806582555}
   - {fileID: 1680006550}
   - {fileID: 1058289921}
